@@ -1,0 +1,226 @@
+body {
+    max-width: 60%;
+    margin: auto;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+}
+
+h2 {
+    display: inline-block;
+}
+
+img:nth-of-type(1) {
+    max-width: 140px;
+    margin-top: 15px;
+}
+
+#slide-1 {
+    background-color: rgb(255 254 232);
+    border: 1px solid black;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 2%;
+}
+
+#paragraphs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.paragraph {
+    border: 1px solid black;
+    background-color: white;
+    text-align: left;
+    max-width: 500px;
+    max-height: 50px;
+
+}
+
+.p{
+    opacity: 0;
+    margin-block: 0;
+    overflow: hidden;
+    margin: 5px;
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.p1 {margin-right: 3%;}
+.p1 .bold {
+    font-weight: bold;
+}
+.p2 {margin-right: 6%;}
+.italic {
+    font-style: italic;
+}
+.p3 {
+    margin-right: 9%;
+    display: flex;
+}
+.p3 img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    margin: 0;
+}
+
+.tooltip .paragraphTooltip {
+    display: flex;
+    justify-items: center;
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .paragraphTooltip {
+    visibility: visible;
+}
+
+.pTransition1 {
+    animation-name: fadeIn;
+    animation: fadeIn 1s ease;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fadeIn 1s;
+    -webkit-animation-delay: 1s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation: fadeIn 1s;
+    -moz-animation-delay: 1s;
+    -o-animation: fadeIn 1s;
+    -moz-animation-delay: 1s;
+    -ms-animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+.pTransition2 {
+    animation-name: fadeIn;
+    animation: fadeIn 1s ease;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fadeIn 1s;
+    -webkit-animation-delay: 2s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation: fadeIn 1s;
+    -moz-animation-delay: 2s;
+    -o-animation: fadeIn 1s;
+    -moz-animation-delay: 2s;
+    -ms-animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+.pTransition3 {
+    animation-name: fadeIn;
+    animation: fadeIn 1s ease;
+    animation-delay: 3s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fadeIn 1s;
+    -webkit-animation-delay: 3s;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation: fadeIn 1s;
+    -moz-animation-delay: 3s;
+    -o-animation: fadeIn 1s;
+    -moz-animation-delay: 3s;
+    -ms-animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+#basicRobot {
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    width: 315px;
+}
+
+#basicRobot, h3 {
+    font-size: 1.4em;
+    margin: -1px;
+    padding: 5px 0;
+}
+
+#robotContainer {
+    position: relative;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid black;
+    min-width: 35%;
+    min-height: 300px;
+}
+
+#formH3 {
+    border: 1px solid black;
+    text-align: center;
+    margin: -1px;
+    font-weight:normal;
+}
+
+#slide-2 {
+    background-color: rgb(215, 224, 206);
+    border: 1px solid black;
+    margin-top: 2%;
+}
+
+#mainForm {
+    display: flex;
+    justify-content: space-between;
+    margin: 3% 3%;
+}
+
+.formOptions {
+    display: flex;
+    flex-direction: column;
+}
+
+#comments {
+    height: 4em;
+    text-align: center;
+}
+
+#form-btns {
+    display: flex;
+    margin-bottom: 3%;
+    margin-left: 3%;
+}
+
+button:nth-of-type(1) {
+    padding: 0 3%;
+    margin-right: 3%;
+}
+
+button:nth-of-type(2) {
+    padding: 0 1%;
+}
+
+#after-form {
+    border-top: 1px solid black;
+    height: 201px;
+    margin-bottom: -21px;
+}

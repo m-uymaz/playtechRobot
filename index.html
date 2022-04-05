@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="robot.css">
+  <title>My Robot</title>
+</head>
+
+<body>
+  <header>
+    <h2>ROBOT FACTORY</h2>
+    <a href="https://www.playtech.com/" target="_blank">
+      <img src="PTWebAcademy.JPG" alt="https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Playtech_logo.svg/1280px-Playtech_logo.svg.png">
+    </a>
+  </header>
+  <section id="slide-1" class="factiory-section">
+    <div id="basicRobot">
+      <h3>Basic Robot</h3>
+    </div>
+    <div class="content-wrapper">
+      <div id="robotContainer">
+        <div id="robotFriend">
+          <div id="head">
+            <div id="eyes">
+              <div class="eye"></div>
+              <div class="eye"></div>
+            </div>
+            <div id="mouth"></div>
+          </div>
+          <div id="body">
+            <div class="hand leftHand"></div>
+            <div id="torso"></div>
+            <div class="hand rightHand"></div>
+            <div class="leg leftleg"></div>
+            <div class="leg rightleg"></div>
+          </div>
+        </div>
+        <div id="robotNameContainer">Robot name</div>
+      </div>
+      <div id="paragraphs">
+        <div class="paragraph p1 tooltip">
+          <span class="paragraphTooltip">
+            Paragraph text here. Text-align on left, 3% space from right border.
+            Text is only 2 lines and ends with three dots... because it too long.
+            On hover full text is shown as tooltip. First letter is bold.
+          </span>
+          <p class="p pTransition1">
+            <span class="bold">Paragraph</span> text here. Text-align on left, 3% space from right border.
+            Text is only 2 lines and ends with three dots... because it too long.
+            On hover full text is shown as tooltip. First letter is bold.
+          </p>
+        </div>
+        <div class="paragraph p2 tooltip">
+          <span class="paragraphTooltip">
+            Paragraph text here. Text justified, 6% space from right border.
+            Text is only 2 lines and ends with three dots... because it too long.
+            On hover full text is shown. First word is Italic.
+          </span>
+          <p class="p pTransition2">
+            <span class="italic">Paragraph</span> text here. Text justified, 6% space from right border.
+            Text is only 2 lines and ends with three dots... because it too long.
+            On hover full text is shown. First word is Italic.
+          </p>
+        </div>
+        <div class="paragraph p3">
+          <img src="good_luck.jpg" alt="">
+          <p class="p pTransition3">
+            Paragraph text here. Text-align in left, 9% from right border. Image on left side.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="slide-2">
+    <h3 id="formH3">Create Robot</h3>
+    <form action="POST">
+      <div id="mainForm">
+        <div class="formOptions">
+          <label for="robotName">Name</label>
+          <input name="robotName" id="robotName" placeholder="Robot name" type="text">
+        </div>
+        <div class="formOptions">
+          <label for="selectType">Select type</label>
+          <select name="selectType" id="selectType">
+            <option value="basicRobot">basicRobot</option>
+          </select>
+        </div>
+        <div class="formOptions">
+          <label>Select Color</label>
+          <input type="color" value="#b3440c">
+        </div>
+        <div class="formOptions">
+          <label>Select Options</label>
+          <div>
+            <input type="checkbox" id="canJump" name="canJump" checked>
+            <label for="canJump">can jump</label>
+          </div>
+          <div>
+            <input type="checkbox" name="canTalk" id="canTalk" checked>
+            <label for="canTalk">can talk</label>
+          </div>
+          <div>
+            <input type="checkbox" name="canBlink" id="canBlink" checked>
+            <label for="canBlink">can blink</label>
+          </div>
+        </div>
+        <div class="formOptions">
+          <label for="comments">Write Comments</label>
+          <input placeholder="text area" type="text" name="comments" id="comments">
+        </div>
+      </div>
+      <div id="form-btns">
+        <button>Create</button>
+        <button>Show Created Robots</button>
+      </div>
+    </form>
+    <div id="after-form">
+
+    </div>
+  </section>
+</body>
+
+</html>
