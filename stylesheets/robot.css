@@ -1,0 +1,135 @@
+.robotFriend {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#head {
+    position: absolute;
+    transform: translate(-50%, -235%);
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+#eyes {
+    display: flex;
+    justify-content: space-around;
+}
+
+.eye {
+    display: inline-block;
+    border: 1px black solid;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translateY(10px)
+}
+
+.mouth {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -65%);
+    border: 1px black solid;
+    border-radius: 50%;
+    width: 25px;
+    height: 4px;
+}
+
+#body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+}
+
+.torso-male {
+    display: flex;
+    border-top: 100px solid red;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    height: 0;
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+.torso-female {
+    display: flex;
+    border-bottom: 100px solid red;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    height: 0;
+    width: 50px;
+    margin-bottom: 10px;
+}
+
+.hand {
+    background-color: rgb(238, 238, 238);
+    border: 1px black solid;
+    border-radius: 5%;
+    width: 11px;
+    height: 80px;
+}
+
+.leftHand-male {
+    position: absolute;
+    top: 45%;
+    left: -7%;
+    transform: translate(-50%, -55%);
+}
+
+.rightHand-male {
+    position: absolute;
+    top: 45%;
+    left: 107%;
+    transform: translate(-50%, -55%);
+}
+
+.leftHand-female {
+    position: absolute;
+    top: 40%;
+    left: -10%;
+    transform: translate(10%, -50%) rotate(9deg);
+}
+
+.rightHand-female {
+    position: absolute;
+    top: 40%;
+    left: 90%;
+    transform: translate(10%, -50%) rotate(-9deg);
+}
+
+.leg {
+    display: inline-block;
+    border: 1px black solid;
+    width: 11px;
+    height: 60px;
+    z-index: -1;
+}
+
+.leftLeg {
+    position: absolute;
+    top: 118%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+}
+
+.rightLeg {
+    position: absolute;
+    top: 118%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+}
+
+.robotNameContainer {
+    display: flex;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

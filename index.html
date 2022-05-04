@@ -5,11 +5,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="1_robot_alert.js"></script>
-  <script src="2_robot_object_phrases.js"></script>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="robot.css">
+  <link rel="stylesheet" href="./stylesheets/style.css">
+  <link rel="stylesheet" href="./stylesheets/robot.css">
+  <link rel="stylesheet" href="./stylesheets/error.css">
+  <link rel="stylesheet" href="./stylesheets/robotSelectOptions.css">
   <title>My Robot</title>
+  <script src="./javascripts/carousel.js"></script>
 </head>
 
 <body>
@@ -19,111 +20,69 @@
       <img src="PTWebAcademy.JPG" alt="https://upload.wikimedia.org/wikipedia/en/thumb/6/65/Playtech_logo.svg/1280px-Playtech_logo.svg.png">
     </a>
   </header>
-  <section id="slide-1" class="factiory-section">
-    <div id="basicRobot">
-      <h3>Basic Robot</h3>
-    </div>
-    <div class="content-wrapper">
-      <div id="robotContainer">
-        <div id="robotFriend">
-          <div id="head">
-            <div id="eyes">
-              <div class="eye"></div>
-              <div class="eye"></div>
-            </div>
-            <div id="mouth"></div>
-          </div>
-          <div id="body">
-            <div class="hand leftHand"></div>
-            <div id="torso"></div>
-            <div class="hand rightHand"></div>
-            <div class="leg leftleg"></div>
-            <div class="leg rightleg"></div>
-          </div>
-        </div>
-        <div id="robotNameContainer">Robot name</div>
-      </div>
-      <div id="paragraphs">
-        <div class="paragraph p1 tooltip">
-          <span class="paragraphTooltip">
-            Paragraph text here. Text-align on left, 3% space from right border.
-            Text is only 2 lines and ends with three dots... because it too long.
-            On hover full text is shown as tooltip. First letter is bold.
-          </span>
-          <p class="p pTransition1">
-            <span class="bold">Paragraph</span> text here. Text-align on left, 3% space from right border.
-            Text is only 2 lines and ends with three dots... because it too long.
-            On hover full text is shown as tooltip. First letter is bold.
-          </p>
-        </div>
-        <div class="paragraph p2 tooltip">
-          <span class="paragraphTooltip">
-            Paragraph text here. Text justified, 6% space from right border.
-            Text is only 2 lines and ends with three dots... because it too long.
-            On hover full text is shown. First word is Italic.
-          </span>
-          <p class="p pTransition2">
-            <span class="italic">Paragraph</span> text here. Text justified, 6% space from right border.
-            Text is only 2 lines and ends with three dots... because it too long.
-            On hover full text is shown. First word is Italic.
-          </p>
-        </div>
-        <div class="paragraph p3">
-          <img src="good_luck.jpg" alt="">
-          <p class="p pTransition3">
-            Paragraph text here. Text-align in left, 9% from right border. Image on left side.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="ct">
+    <div class="carousel"></div>
+  </div>
+  <div class="slide-buttons">
+    <button onclick="widthToMove += 900, prevSlide(widthToMove)" class="prev">Prev</button>
+    <button onclick="widthToMove -= 900, prevSlide(widthToMove)" class="next">Next</button>
+  </div>
   <section id="slide-2">
     <h3 id="formH3">Create Robot</h3>
-    <form action="POST">
+    <form action="POST" id="robot-form">
       <div id="mainForm">
         <div class="formOptions">
+          <span class="error errorName"></span>
           <label for="robotName">Name</label>
-          <input name="robotName" id="robotName" placeholder="Robot name" type="text">
+          <input type="text" name="robotName" id="robotName" placeholder="Robot name">
         </div>
         <div class="formOptions">
+          <span class="error errorType"></span>
           <label for="selectType">Select type</label>
           <select name="selectType" id="selectType">
-            <option value="basicRobot">basicRobot</option>
+            <option value="" disabled selected hidden>M/F</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
         </div>
         <div class="formOptions">
-          <label>Select Color</label>
-          <input type="color" value="#b3440c">
+          <span class="error errorColor"></span>
+          <label for="selectColor">Select Color</label>
+          <input type="color" name="selectColor" value="#b3440c" id="selectColor">
         </div>
         <div class="formOptions">
           <label>Select Options</label>
           <div>
-            <input type="checkbox" id="canJump" name="canJump" checked>
+            <input type="checkbox" id="canJump" name="canJump" checked value="true">
             <label for="canJump">can jump</label>
           </div>
           <div>
-            <input type="checkbox" name="canTalk" id="canTalk" checked>
+            <input onchange="onCheckboxChange()" type="checkbox" name="canTalk" id="canTalk" checked value="true">
             <label for="canTalk">can talk</label>
           </div>
           <div>
-            <input type="checkbox" name="canBlink" id="canBlink" checked>
+            <input type="checkbox" name="canBlink" id="canBlink" checked value="true">
             <label for="canBlink">can blink</label>
           </div>
         </div>
         <div class="formOptions">
-          <label for="comments">Write Comments</label>
-          <input placeholder="text area" type="text" name="comments" id="comments">
+          <span class="error errorPhrase"></span>
+          <label for="phrase">Phrase</label>
+          <input placeholder="Phrase" type="text" name="phrase" id="phrase">
         </div>
       </div>
       <div id="form-btns">
-        <button>Create</button>
-        <button>Show Created Robots</button>
+        <button class="create">Create</button>
+        <button class="showCreatedRobots">Show Created Robots</button>
       </div>
     </form>
-    <div id="after-form">
-
-    </div>
+    <div id="after-form"></div>
   </section>
+
+  <!-- <script src="./javascripts/1_robot_alert.js"></script>
+  <script src="./javascripts/2_robot_object_phrases.js"></script> -->
+  <script src="./javascripts/robotFormAndCreation.js"></script>
+  <script src="./javascripts/robotFactorySection.js"></script>
 </body>
 
 </html>

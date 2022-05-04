@@ -1,0 +1,6 @@
+.error {
+    position: absolute;
+    color: red;
+    background-color: rgb(215, 224, 206);
+    border-radius: 0 0 5px 5px;
+}
