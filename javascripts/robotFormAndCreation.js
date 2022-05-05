@@ -155,5 +155,5 @@ const createRobot = (name, type, color, phrase) => {
     slideButtons.style.display = "flex";
     const carousel = body.querySelector(".carousel");
 
-    carousel.appendChild(slide1);
+    carousel.prepend(slide1);
 };
