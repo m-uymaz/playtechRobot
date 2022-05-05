@@ -101,7 +101,7 @@
 }
 
 .bubble {
-    position: relative;
+    position: absolute;
     left: 65%;
     top: -13%;
     font-family: sans-serif;

@@ -210,8 +210,8 @@ button:nth-child(2) {
     flex-direction: column;
     align-items: flex-start;
     border: 1px solid black;
-    max-width: 35%;
-    min-height: 300px;
+    width: 807px;
+    height: 300px;
     margin-right: 3%;
 }
 
