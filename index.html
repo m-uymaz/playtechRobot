@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="./stylesheets/error.css">
   <link rel="stylesheet" href="./stylesheets/robotSelectOptions.css">
   <title>My Robot</title>
-  <script src="./javascripts/carousel.js"></script>
 </head>
 
 <body>
@@ -24,8 +23,8 @@
     <div class="carousel"></div>
   </div>
   <div class="slide-buttons">
-    <button onclick="widthToMove += 900, prevSlide(widthToMove)" class="prev">Prev</button>
-    <button onclick="widthToMove -= 900, prevSlide(widthToMove)" class="next">Next</button>
+    <button id="prev">Prev</button>
+    <button id="next">Next</button>
   </div>
   <section id="slide-2">
     <h3 id="formH3">Create Robot</h3>

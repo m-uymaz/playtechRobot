@@ -1,5 +1,6 @@
 //Robot Storage
 const robotModels = [];
+let numOfSections = 0;
 
 const form = document.querySelector("#robot-form");
 const phrase = form.querySelector("input[name='phrase']");
@@ -154,6 +155,55 @@ const createRobot = (name, type, color, phrase) => {
     const slideButtons = body.querySelector(".slide-buttons");
     slideButtons.style.display = "flex";
     const carousel = body.querySelector(".carousel");
-
     carousel.prepend(slide1);
+    carousel.style.transform = `translateX(0px)`;
+
+    // NEEDED FOR CAROUSEL TO WORK!!!
+    slideMove = 0;
+    sectionCount++
+    if (sectionCount === 1) {
+    nextBtn.disabled = true;
+    prevBtn.disabled = true;
+    } else {
+        nextBtn.disabled = false;
+        prevBtn.disabled = true;
+    }
+};
+
+//selectors
+const nextBtn = document.querySelector("#next");
+const prevBtn = document.querySelector("#prev");
+let sectionCount = 0;
+let slideMove = 0;
+
+// event listeners
+nextBtn.onclick = function () {
+    const carousel = document.querySelector(".carousel");
+    const sectionsCount = carousel.children.length;
+    console.log(sectionsCount);
+    slideMove++
+    if (slideMove - 1 >= 0) {
+        prevBtn.disabled = false;
+    };
+    if (slideMove >= sectionsCount - 1) {
+        nextBtn.disabled = true;
+    };
+    console.log(slideMove);
+    const curWidth = carousel.offsetWidth;
+    const widthToMove = curWidth * slideMove;
+    carousel.style.transform = `translateX(-${widthToMove}px)`;
+};
+
+prevBtn.onclick = function () {
+    slideMove--;
+    if (slideMove <= 0) {
+        nextBtn.disabled = false;
+        prevBtn.disabled = true;
+    };
+    console.log(slideMove);
+    const carousel = document.querySelector(".carousel");
+    const curWidth = carousel.offsetWidth;
+    const widthToMove = curWidth * slideMove;
+    console.log(widthToMove);
+    carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
