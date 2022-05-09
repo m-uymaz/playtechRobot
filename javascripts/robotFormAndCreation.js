@@ -185,8 +185,11 @@ nextBtn.onclick = function () {
     if (slideMove - 1 >= 0) {
         prevBtn.disabled = false;
     };
-    if (slideMove >= sectionsCount - 1) {
-        nextBtn.disabled = true;
+    if (slideMove >= sectionsCount) {
+        carousel.style.transform = `translateX(0px)`;
+        slideMove = 0;
+        prevBtn.disabled = true;
+        return
     };
     console.log(slideMove);
     const curWidth = carousel.offsetWidth;
