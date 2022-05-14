@@ -27,54 +27,56 @@
     <button id="next">Next</button>
   </div>
   <section id="slide-2">
-    <h3 id="formH3">Create Robot</h3>
-    <form action="POST" id="robot-form">
-      <div id="mainForm">
-        <div class="formOptions">
-          <span class="error errorName"></span>
-          <label for="robotName">Name</label>
-          <input type="text" name="robotName" id="robotName" placeholder="Robot name">
-        </div>
-        <div class="formOptions">
-          <span class="error errorType"></span>
-          <label for="selectType">Select type</label>
-          <select name="selectType" id="selectType">
-            <option value="" disabled selected hidden>M/F</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-        <div class="formOptions">
-          <span class="error errorColor"></span>
-          <label for="selectColor">Select Color</label>
-          <input type="color" name="selectColor" value="#b3440c" id="selectColor">
-        </div>
-        <div class="formOptions">
-          <label>Select Options</label>
-          <div>
-            <input type="checkbox" id="canJump" name="canJump" checked value="true">
-            <label for="canJump">can jump</label>
+    <div>
+      <h3 id="formH3">Create Robot</h3>
+      <form action="POST" id="robot-form">
+        <div id="mainForm">
+          <div class="formOptions">
+            <span class="error errorName"></span>
+            <label for="robotName">Name</label>
+            <input type="text" name="robotName" id="robotName" placeholder="Robot name">
           </div>
-          <div>
-            <input onchange="onCheckboxChange()" type="checkbox" name="canTalk" id="canTalk" checked value="true">
-            <label for="canTalk">can talk</label>
+          <div class="formOptions">
+            <span class="error errorType"></span>
+            <label for="selectType">Select type</label>
+            <select name="selectType" id="selectType">
+              <option value="" disabled selected hidden>M/F</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
           </div>
-          <div>
-            <input type="checkbox" name="canBlink" id="canBlink" checked value="true">
-            <label for="canBlink">can blink</label>
+          <div class="formOptions">
+            <span class="error errorColor"></span>
+            <label for="selectColor">Select Color</label>
+            <input type="color" name="selectColor" value="#b3440c" id="selectColor">
+          </div>
+          <div class="formOptions">
+            <label>Select Options</label>
+            <div>
+              <input type="checkbox" id="canJump" name="canJump" checked value="can jump">
+              <label for="canJump">can jump</label>
+            </div>
+            <div>
+              <input onchange="onCheckboxChange()" type="checkbox" name="canTalk" id="canTalk" checked value="can talk">
+              <label for="canTalk">can talk</label>
+            </div>
+            <div>
+              <input type="checkbox" name="canBlink" id="canBlink" checked value="can blink">
+              <label for="canBlink">can blink</label>
+            </div>
+          </div>
+          <div class="formOptions">
+            <span class="error errorPhrase"></span>
+            <label for="phrase">Phrase</label>
+            <input placeholder="Phrase" type="text" name="phrase" id="phrase">
           </div>
         </div>
-        <div class="formOptions">
-          <span class="error errorPhrase"></span>
-          <label for="phrase">Phrase</label>
-          <input placeholder="Phrase" type="text" name="phrase" id="phrase">
+        <div id="form-btns">
+          <button type="submit" class="create">Create</button>
+          <button type="button" class="showCreatedRobots" value="false">Show Created Robots</button>
         </div>
-      </div>
-      <div id="form-btns">
-        <button class="create">Create</button>
-        <button class="showCreatedRobots">Show Created Robots</button>
-      </div>
-    </form>
+      </form>
+    </div>
     <div id="after-form"></div>
   </section>
 
@@ -82,6 +84,7 @@
   <script src="./javascripts/2_robot_object_phrases.js"></script> -->
   <script src="./javascripts/robotFormAndCreation.js"></script>
   <script src="./javascripts/robotFactorySection.js"></script>
+  <script src="./javascripts/showCreatedRobots.js"></script>
 </body>
 
 </html>

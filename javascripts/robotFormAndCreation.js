@@ -1,6 +1,5 @@
 //Robot Storage
 const robotModels = [];
-let numOfSections = 0;
 
 const form = document.querySelector("#robot-form");
 const phrase = form.querySelector("input[name='phrase']");
@@ -18,7 +17,27 @@ const onCheckboxChange = () => {
 
 //Form submission and validation
 function formSubmit(event) {
+    // Checking if robots can jump, talk, blink
+    const jumpCheckbox = form.querySelector("input[name='canJump']");
     const talkCheckbox = form.querySelector("input[name='canTalk']");
+    const blinkCheckbox = form.querySelector("input[name='canBlink']");
+    const options = [];
+    let jump;
+    let talk;
+    let blink;
+
+    if (jumpCheckbox.checked) {
+        jump = "can jump";
+        options.push(jump);
+    };
+    if (talkCheckbox.checked) {
+        talk = "can talk";
+        options.push(talk);
+    };
+    if (blinkCheckbox.checked) {
+        blink = "can blink";
+        options.push(blink);
+    };
 
     const name = form.querySelector("#robotName");
     const type = form.querySelector("#selectType");
@@ -48,29 +67,26 @@ function formSubmit(event) {
             const phraseErrorMessage = "Please write a phrase";
             showError(phrase, phraseErrorMessage, spanErrorPhrase);
         };
-        return false;
-    }
-    if (phrase.disabled) {
-        robotModels.push({
-            name: name.value,
-            type: type.value,
-            color: color.value,
-        });
-        createRobot(name, type, color, phrase);
-    } else {
-        robotModels.push({
-            name: name.value,
-            type: type.value,
-            color: color.value,
-            phrase: phrase.value,
-        });
-        createRobot(name, type, color, phrase);
-        phrase.value = "";
+        return;
     };
+    robotModels.push({
+        id: robotModels.length + 1,
+        name: name.value,
+        type: type.value,
+        color: color.value,
+        phrase: phrase.value,
+        options
+    });
+    createRobot(name, type, color, phrase);
+    phrase.value = "";
+    
     clearErrorMessages();
     console.log(robotModels);
     form.reset();
     phrase.disabled = !talkCheckbox.checked;
+
+    // Removing "No robots yet" upon creation
+    removeNoRobotsYet();
 };
 
 //Shows the error
@@ -158,10 +174,10 @@ const createRobot = (name, type, color, phrase) => {
     carousel.prepend(slide1);
     carousel.style.transform = `translateX(0px)`;
 
+    // CAROUSEL LOGIC STARTS FROM HERE 
     // NEEDED FOR CAROUSEL TO WORK!!!
     slideMove = 0;
-    sectionCount++
-    if (sectionCount === 1) {
+    if (robotModels.length === 1) {
     nextBtn.disabled = true;
     prevBtn.disabled = true;
     } else {
@@ -171,16 +187,14 @@ const createRobot = (name, type, color, phrase) => {
 };
 
 //selectors
+const carousel = document.querySelector(".carousel");
 const nextBtn = document.querySelector("#next");
 const prevBtn = document.querySelector("#prev");
-let sectionCount = 0;
 let slideMove = 0;
 
 // event listeners
 nextBtn.onclick = function () {
-    const carousel = document.querySelector(".carousel");
     const sectionsCount = carousel.children.length;
-    console.log(sectionsCount);
     slideMove++
     if (slideMove - 1 >= 0) {
         prevBtn.disabled = false;
@@ -191,7 +205,6 @@ nextBtn.onclick = function () {
         prevBtn.disabled = true;
         return
     };
-    console.log(slideMove);
     const curWidth = carousel.offsetWidth;
     const widthToMove = curWidth * slideMove;
     carousel.style.transform = `translateX(-${widthToMove}px)`;
@@ -203,10 +216,7 @@ prevBtn.onclick = function () {
         nextBtn.disabled = false;
         prevBtn.disabled = true;
     };
-    console.log(slideMove);
-    const carousel = document.querySelector(".carousel");
     const curWidth = carousel.offsetWidth;
     const widthToMove = curWidth * slideMove;
-    console.log(widthToMove);
     carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
