@@ -17,6 +17,7 @@ const onCheckboxChange = () => {
 
 //Form submission and validation
 function formSubmit(event) {
+    event.preventDefault();
     // Checking if robots can jump, talk, blink
     const jumpCheckbox = form.querySelector("input[name='canJump']");
     const talkCheckbox = form.querySelector("input[name='canTalk']");
@@ -45,7 +46,6 @@ function formSubmit(event) {
 
     const phrase = form.querySelector("input[name='phrase']");
     clearErrorMessages();
-    event.preventDefault();
     if (!name.value || !type.value || !color.value || !phrase.disabled && phrase.value === "") {
         if (!name.value) {
             const spanErrorName = document.querySelector(".errorName");
@@ -70,12 +70,12 @@ function formSubmit(event) {
         return;
     };
     robotModels.push({
-        id: robotModels.length + 1,
+        id: `${robotModels.length + 1}`,
         name: name.value,
         type: type.value,
         color: color.value,
         phrase: phrase.value,
-        options
+        options,
     });
     createRobot(name, type, color, phrase);
     phrase.value = "";
@@ -106,7 +106,6 @@ const clearErrorMessages = () => {
 const createRobot = (name, type, color, phrase) => {
     const body = document.querySelector("body");
     const slide1 = buildSection();
-    const slide2 = body.querySelector("#slide-2");
 
     const robotFriend = slide1.querySelector(".robotFriend");
 
@@ -172,6 +171,8 @@ const createRobot = (name, type, color, phrase) => {
     slideButtons.style.display = "flex";
     const carousel = body.querySelector(".carousel");
     carousel.prepend(slide1);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     carousel.style.transform = `translateX(0px)`;
 
     // CAROUSEL LOGIC STARTS FROM HERE 
@@ -183,7 +184,7 @@ const createRobot = (name, type, color, phrase) => {
     } else {
         nextBtn.disabled = false;
         prevBtn.disabled = true;
-    }
+    };
 };
 
 //selectors
