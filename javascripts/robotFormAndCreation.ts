@@ -7,7 +7,6 @@ const robotModels: {
     phrase: string,
     options: string[]
 }[] = [];
-
 const form = document.querySelector("#robot-form") as HTMLFormElement;
 const phrase = form.querySelector("input[name='phrase']") as HTMLButtonElement;
 form.addEventListener("submit", formSubmit);

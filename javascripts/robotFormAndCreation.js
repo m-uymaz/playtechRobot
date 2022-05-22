@@ -1,10 +1,8 @@
 "use strict";
-//Robot Storage
 const robotModels = [];
 const form = document.querySelector("#robot-form");
 const phrase = form.querySelector("input[name='phrase']");
 form.addEventListener("submit", formSubmit);
-//Checkbox for "Phrase" input
 const onCheckboxChange = () => {
     const talkCheckbox = form.querySelector("input[name='canTalk']");
     const phrase = form.querySelector("input[name='phrase']");
@@ -14,10 +12,8 @@ const onCheckboxChange = () => {
     }
     ;
 };
-//Form submission and validation
 function formSubmit(event) {
     event.preventDefault();
-    // Checking if robots can jump, talk, blink
     const jumpCheckbox = form.querySelector("input[name='canJump']");
     const talkCheckbox = form.querySelector("input[name='canTalk']");
     const blinkCheckbox = form.querySelector("input[name='canBlink']");
@@ -76,7 +72,7 @@ function formSubmit(event) {
         type: type.value,
         color: color.value,
         phrase: phrase.value,
-        options,
+        options
     });
     createRobot(name, type, color, phrase);
     phrase.value = "";
@@ -84,32 +80,26 @@ function formSubmit(event) {
     console.log(robotModels);
     form.reset();
     phrase.disabled = !talkCheckbox.checked;
-    // Removing "No robots yet" upon creation
     removeNoRobotsYet();
 }
 ;
-//Shows the error
 const showError = (input, errorMessage, spanError) => {
     if (input.value === "") {
         spanError.textContent = errorMessage;
     }
     ;
 };
-//Clears messages on a submit or a submit try after an error
 const clearErrorMessages = () => {
     const allErrorSpans = document.querySelectorAll(".error");
     allErrorSpans.forEach(el => el.textContent = "");
 };
-//Visual creation of Robots
 const createRobot = (name, type, color, phrase) => {
     const body = document.querySelector("body");
     const slide1 = buildSection();
     const robotFriend = slide1.querySelector(".robotFriend");
-    //Checkboxes
     const jumpCheckbox = form.querySelector("input[name='canJump']");
     const talkCheckbox = form.querySelector("input[name='canTalk']");
     const blinkCheckbox = form.querySelector("input[name='canBlink']");
-    //Robot body
     const eye = slide1.querySelector("#eyes div:nth-of-type(2)");
     const torso = slide1.querySelector(".torso");
     const mouth = slide1.querySelector(".mouth");
@@ -136,7 +126,6 @@ const createRobot = (name, type, color, phrase) => {
         ribon.textContent = "Female Robot";
     }
     ;
-    // Adding animations depending on checked checkbox
     if (jumpCheckbox.checked) {
         robotFriend.classList.add("wholeRobotJump");
         leftLeg.classList.add("legsJump");
@@ -169,8 +158,6 @@ const createRobot = (name, type, color, phrase) => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     carousel.style.transform = `translateX(0px)`;
-    // CAROUSEL LOGIC STARTS FROM HERE 
-    // NEEDED FOR CAROUSEL TO WORK!!!
     slideMove = 0;
     if (robotModels.length === 1) {
         nextBtn.disabled = true;
@@ -182,12 +169,10 @@ const createRobot = (name, type, color, phrase) => {
     }
     ;
 };
-//selectors
 const carousel = document.querySelector(".carousel");
 const nextBtn = document.querySelector("#next");
 const prevBtn = document.querySelector("#prev");
 let slideMove = 0;
-// event listeners
 nextBtn.onclick = function () {
     const sectionsCount = carousel.children.length;
     slideMove++;
@@ -217,3 +202,4 @@ prevBtn.onclick = function () {
     const widthToMove = curWidth * slideMove;
     carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
+//# sourceMappingURL=robotFormAndCreation.js.map

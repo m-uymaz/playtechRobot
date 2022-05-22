@@ -15,3 +15,4 @@ robot1.recievedPhrases.push(`Hello there, ${robot1.name}!`);
 robot2.recievedPhrases.push(`Hi there, ${robot2.name}!`);
 console.log(robot1.recievedPhrases);
 console.log(robot2.recievedPhrases);
+//# sourceMappingURL=2_robot_object_phrases.js.map

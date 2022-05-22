@@ -1,7 +1,6 @@
 "use strict";
 const afterForm = document.querySelector("#after-form");
 const showRobotsBtn = document.querySelector(".showCreatedRobots");
-// Inputs
 showRobotsBtn.onclick = function () {
     if (robotModels.length > 0 && afterForm.querySelector(".noRobotsYet")) {
         const noRobotsYet = afterForm.querySelector(".noRobotsYet");
@@ -17,7 +16,6 @@ showRobotsBtn.onclick = function () {
         return;
     }
     ;
-    // If we don't have table -> create
     if (showRobotsBtn.value === "false") {
         createRobotTable();
     }
@@ -47,14 +45,12 @@ const showRobotFromATag = (event) => {
     console.log(event.target);
 };
 const addRobotsToTable = (robotsToShow) => {
-    // Upon search remove old table
     const table = document.querySelector("table");
     if (table.querySelector(".tBody")) {
         const tBody = table.querySelector(".tBody");
         table.removeChild(tBody);
     }
     ;
-    // If n of robots changes
     const h4RobotCount = afterForm.querySelector(".h4RobotCount");
     if (robotsToShow.length < 2) {
         h4RobotCount.textContent = `${robotsToShow.length} robot found`;
@@ -95,7 +91,6 @@ const addRobotsToTable = (robotsToShow) => {
     }
     ;
 };
-// Table showing the robots
 const createRobotTable = () => {
     const h4RobotCount = document.createElement("h4");
     h4RobotCount.className = "h4RobotCount";
@@ -138,7 +133,6 @@ const removeNoRobotsYet = () => {
     }
     ;
 };
-// Messaging and messageboard
 const robotMessages = (event) => {
     event.preventDefault();
     const target = event.target;
@@ -146,17 +140,16 @@ const robotMessages = (event) => {
     const messageFromInput = target.querySelector("input");
     const date = new Date();
     const robotSendingMessage = robotModels.filter(x => x.id === target.id);
-    //Getting the time
     function addZero(i) {
-        if (i < 10) {
+        if (parseInt(i) < 10) {
             i = "0" + i;
         }
         return i;
     }
     ;
-    const h = addZero(date.getHours());
-    const m = addZero(date.getMinutes());
-    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h = addZero(date.getHours().toString());
+    const m = addZero(date.getMinutes().toString());
+    const ampm = parseInt(h) >= 12 ? 'PM' : 'AM';
     const time = `${h}:${m} ${ampm}`;
     allRobotsMessageBoards.forEach(messageBoard => {
         const messageConatainer = document.createElement("div");
@@ -195,3 +188,4 @@ function playAudio() {
     audio.play();
 }
 ;
+//# sourceMappingURL=showCreatedRobots.js.map
