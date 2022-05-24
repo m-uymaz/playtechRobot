@@ -1,5 +1,29 @@
 "use strict";
+;
+var RobotType;
+(function (RobotType) {
+    RobotType["male"] = "male";
+    RobotType["female"] = "female";
+})(RobotType || (RobotType = {}));
+;
 const robotModels = [];
+const deleteRobotsBtn = document.querySelector(".deleteRobots");
+window.onload = () => {
+    if (localStorage.getItem("robots")) {
+        deleteRobotsBtn.disabled = false;
+        deleteRobotsBtn.textContent = "Delete Robots";
+        const robotsFromStorage = localStorage.getItem("robots");
+        const parsed = JSON.parse(robotsFromStorage);
+        robotModels.push(...parsed);
+        for (let i = 0; i < robotModels.length; i++) {
+            createRobot(robotModels[i]);
+        }
+        ;
+        carouselButtonsSlide();
+    }
+    ;
+    console.log(robotModels);
+};
 const form = document.querySelector("#robot-form");
 const phrase = form.querySelector("input[name='phrase']");
 form.addEventListener("submit", formSubmit);
@@ -66,15 +90,18 @@ function formSubmit(event) {
         return;
     }
     ;
-    robotModels.push({
+    const robotType = (type.value === "male") ? RobotType.male : RobotType.female;
+    const createdRobot = {
         id: `${robotModels.length + 1}`,
         name: name.value,
-        type: type.value,
+        type: robotType,
         color: color.value,
         phrase: phrase.value,
         options
-    });
-    createRobot(name, type, color, phrase);
+    };
+    robotModels.push(createdRobot);
+    localStorage.setItem("robots", JSON.stringify(robotModels));
+    createRobot(createdRobot);
     phrase.value = "";
     clearErrorMessages();
     console.log(robotModels);
@@ -93,13 +120,10 @@ const clearErrorMessages = () => {
     const allErrorSpans = document.querySelectorAll(".error");
     allErrorSpans.forEach(el => el.textContent = "");
 };
-const createRobot = (name, type, color, phrase) => {
+const createRobot = (robotModels) => {
     const body = document.querySelector("body");
     const slide1 = buildSection();
     const robotFriend = slide1.querySelector(".robotFriend");
-    const jumpCheckbox = form.querySelector("input[name='canJump']");
-    const talkCheckbox = form.querySelector("input[name='canTalk']");
-    const blinkCheckbox = form.querySelector("input[name='canBlink']");
     const eye = slide1.querySelector("#eyes div:nth-of-type(2)");
     const torso = slide1.querySelector(".torso");
     const mouth = slide1.querySelector(".mouth");
@@ -109,12 +133,12 @@ const createRobot = (name, type, color, phrase) => {
     const rightLeg = slide1.querySelector(".rightLeg");
     const robotNameContainer = slide1.querySelector(".robotNameContainer");
     const ribon = slide1.querySelector("#basicRobot > h3");
-    if (type.value === "male") {
+    if (robotModels.type === RobotType.male) {
         torso.classList.add("torso-male");
         leftHand.classList.add("leftHand-male");
         rightHand.classList.add("rightHand-male");
         const torsoMale = slide1.querySelector(".torso-male");
-        torsoMale.style.borderTop = `100px solid ${color.value}`;
+        torsoMale.style.borderTop = `100px solid ${robotModels.color}`;
         ribon.textContent = "Male Robot";
     }
     else {
@@ -122,33 +146,33 @@ const createRobot = (name, type, color, phrase) => {
         leftHand.classList.add("leftHand-female");
         rightHand.classList.add("rightHand-female");
         const torsoFemale = slide1.querySelector(".torso-female");
-        torsoFemale.style.borderBottom = `100px solid ${color.value}`;
+        torsoFemale.style.borderBottom = `100px solid ${robotModels.color}`;
         ribon.textContent = "Female Robot";
     }
     ;
-    if (jumpCheckbox.checked) {
+    if (robotModels.options.includes("can jump")) {
         robotFriend.classList.add("wholeRobotJump");
         leftLeg.classList.add("legsJump");
         rightLeg.classList.add("legsJump");
     }
     ;
-    if (talkCheckbox.checked) {
+    if (robotModels.phrase) {
         const robotContainer = slide1.querySelector("#robotContainer");
         const talkingBubble = document.createElement("div");
         talkingBubble.classList.add("bubble", "bubble-bottom-left");
         const spanBubble = document.createElement("span");
         spanBubble.classList.add("spanBubble");
-        spanBubble.textContent = phrase.value;
+        spanBubble.textContent = robotModels.phrase;
         talkingBubble.appendChild(spanBubble);
         robotContainer.appendChild(talkingBubble);
         mouth.classList.add("talk");
     }
     ;
-    if (blinkCheckbox.checked) {
+    if (robotModels.options.includes("can blink")) {
         eye.classList.add("blink");
     }
     ;
-    robotNameContainer.textContent = name.value;
+    robotNameContainer.textContent = robotModels.name;
     const carouselContainer = body.querySelector(".ct");
     carouselContainer.classList.add("carousel-container");
     const slideButtons = body.querySelector(".slide-buttons");
@@ -158,7 +182,16 @@ const createRobot = (name, type, color, phrase) => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     carousel.style.transform = `translateX(0px)`;
+    deleteRobotsBtn.disabled = false;
+    deleteRobotsBtn.textContent = "Delete Robots";
     slideMove = 0;
+    carouselButtonsSlide();
+};
+const carousel = document.querySelector(".carousel");
+const nextBtn = document.querySelector("#next");
+const prevBtn = document.querySelector("#prev");
+let slideMove = 0;
+const carouselButtonsSlide = () => {
     if (robotModels.length === 1) {
         nextBtn.disabled = true;
         prevBtn.disabled = true;
@@ -168,12 +201,9 @@ const createRobot = (name, type, color, phrase) => {
         prevBtn.disabled = true;
     }
     ;
+    return;
 };
-const carousel = document.querySelector(".carousel");
-const nextBtn = document.querySelector("#next");
-const prevBtn = document.querySelector("#prev");
-let slideMove = 0;
-nextBtn.onclick = function () {
+nextBtn.onclick = () => {
     const sectionsCount = carousel.children.length;
     slideMove++;
     if (slideMove - 1 >= 0) {
@@ -191,7 +221,7 @@ nextBtn.onclick = function () {
     const widthToMove = curWidth * slideMove;
     carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
-prevBtn.onclick = function () {
+prevBtn.onclick = () => {
     slideMove--;
     if (slideMove <= 0) {
         nextBtn.disabled = false;
@@ -202,4 +232,23 @@ prevBtn.onclick = function () {
     const widthToMove = curWidth * slideMove;
     carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
+deleteRobotsBtn.onclick = () => {
+    robotModels.length = 0;
+    localStorage.clear();
+    removeCarouselChild(carousel);
+    const ct = document.querySelector(".ct");
+    ct.style.border = "none";
+    slideMove = 0;
+    const slideButtons = document.querySelector(".slide-buttons");
+    slideButtons.style.display = "none";
+    deleteRobotsBtn.disabled = true;
+    deleteRobotsBtn.textContent = "No Robots To Delete";
+};
+function removeCarouselChild(carousel) {
+    while (carousel.firstChild) {
+        carousel.removeChild(carousel.firstChild);
+    }
+    ;
+}
+;
 //# sourceMappingURL=robotFormAndCreation.js.map

@@ -36,7 +36,10 @@ const buildSection = () => {
     messageBtn.style.marginTop = "1%";
     messageBtn.style.padding = "0 4%";
     messageBtn.type = "submit";
-    inputDiv.append("Send message:");
+    const inputDivLabel = document.createElement("label");
+    inputDivLabel.style.whiteSpace = "pre";
+    inputDivLabel.textContent = "Send message: ";
+    inputDiv.appendChild(inputDivLabel);
     inputDiv.appendChild(input);
     messagesForm.appendChild(inputDiv);
     messagesForm.appendChild(messageBtn);

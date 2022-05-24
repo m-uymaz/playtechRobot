@@ -1,12 +1,36 @@
 //Robot Storage
-const robotModels: {
+interface Robot {
     id: string,
     name: string,
-    type: string,
+    type: RobotType,
     color: string,
     phrase: string,
     options: string[]
-}[] = [];
+};
+
+enum RobotType {
+    male = "male",
+    female = "female"
+};
+
+const robotModels: Robot[] = [];
+
+const deleteRobotsBtn = document.querySelector(".deleteRobots") as HTMLButtonElement;
+window.onload = () => {
+    if (localStorage.getItem("robots")) {
+        deleteRobotsBtn.disabled = false;
+        deleteRobotsBtn.textContent = "Delete Robots";
+        const robotsFromStorage:any = localStorage.getItem("robots");
+        const parsed = JSON.parse(robotsFromStorage);
+        robotModels.push(...parsed);
+        for (let i = 0; i < robotModels.length; i++) {
+            createRobot(robotModels[i]);
+        };
+        carouselButtonsSlide();
+    };
+    console.log(robotModels);
+};
+
 const form = document.querySelector("#robot-form") as HTMLFormElement;
 const phrase = form.querySelector("input[name='phrase']") as HTMLButtonElement;
 form.addEventListener("submit", formSubmit);
@@ -49,7 +73,6 @@ function formSubmit(event: Event) {
     const name = form.querySelector("#robotName") as HTMLInputElement;
     const type = form.querySelector("#selectType") as HTMLInputElement;
     const color = form.querySelector("#selectColor") as HTMLInputElement;
-
     const phrase = form.querySelector("input[name='phrase']") as HTMLInputElement;
     clearErrorMessages();
     if (!name.value || !type.value || !color.value || !phrase.disabled && phrase.value === "") {
@@ -75,15 +98,18 @@ function formSubmit(event: Event) {
         };
         return;
     };
-    robotModels.push({
+    const robotType = (type.value === "male") ? RobotType.male : RobotType.female;
+    const createdRobot = {
         id: `${robotModels.length + 1}`,
         name: name.value,
-        type: type.value,
+        type: robotType,
         color: color.value,
         phrase: phrase.value,
         options
-    });
-    createRobot(name, type, color, phrase);
+    };
+    robotModels.push(createdRobot);
+    localStorage.setItem("robots", JSON.stringify(robotModels));
+    createRobot(createdRobot);
     phrase.value = "";
     
     clearErrorMessages();
@@ -109,16 +135,10 @@ const clearErrorMessages = () => {
 };
 
 //Visual creation of Robots
-const createRobot = (name: HTMLInputElement, type: HTMLInputElement, color: HTMLInputElement, phrase: HTMLInputElement) => {
+const createRobot = (robotModels: any) => {
     const body = document.querySelector("body") as HTMLBodyElement;
     const slide1 = buildSection();
-
     const robotFriend = slide1.querySelector(".robotFriend") as HTMLDivElement;
-
-    //Checkboxes
-    const jumpCheckbox = form.querySelector("input[name='canJump']") as HTMLInputElement;
-    const talkCheckbox = form.querySelector("input[name='canTalk']") as HTMLInputElement;
-    const blinkCheckbox = form.querySelector("input[name='canBlink']") as HTMLInputElement;
 
     //Robot body
     const eye = slide1.querySelector("#eyes div:nth-of-type(2)") as HTMLDivElement;
@@ -132,44 +152,44 @@ const createRobot = (name: HTMLInputElement, type: HTMLInputElement, color: HTML
     const robotNameContainer = slide1.querySelector(".robotNameContainer") as HTMLDivElement;
     const ribon = slide1.querySelector("#basicRobot > h3") as HTMLHeadElement;
 
-    if (type.value === "male") {
+    if (robotModels.type === RobotType.male) {
         torso.classList.add("torso-male");
         leftHand.classList.add("leftHand-male");
         rightHand.classList.add("rightHand-male");
         const torsoMale = slide1.querySelector(".torso-male") as HTMLDivElement;
-        torsoMale.style.borderTop = `100px solid ${color.value}`;
+        torsoMale.style.borderTop = `100px solid ${robotModels.color}`;
         ribon.textContent = "Male Robot";
     } else {
         torso.classList.add("torso-female");
         leftHand.classList.add("leftHand-female");
         rightHand.classList.add("rightHand-female");
         const torsoFemale = slide1.querySelector(".torso-female") as HTMLDivElement;
-        torsoFemale.style.borderBottom = `100px solid ${color.value}`;
+        torsoFemale.style.borderBottom = `100px solid ${robotModels.color}`;
         ribon.textContent = "Female Robot";
     };
 
     // Adding animations depending on checked checkbox
-    if (jumpCheckbox.checked) {
+    if (robotModels.options.includes("can jump")) {
         robotFriend.classList.add("wholeRobotJump");
         leftLeg.classList.add("legsJump");
         rightLeg.classList.add("legsJump");
     };
-    if (talkCheckbox.checked) {
+    if (robotModels.phrase) {
         const robotContainer = slide1.querySelector("#robotContainer") as HTMLDivElement;
         const talkingBubble = document.createElement("div");
         talkingBubble.classList.add("bubble", "bubble-bottom-left");
         
         const spanBubble = document.createElement("span");
         spanBubble.classList.add("spanBubble");
-        spanBubble.textContent = phrase.value;
+        spanBubble.textContent = robotModels.phrase;
         talkingBubble.appendChild(spanBubble);
         robotContainer.appendChild(talkingBubble);
         mouth.classList.add("talk");
     };
-    if (blinkCheckbox.checked) {
+    if (robotModels.options.includes("can blink")) {
         eye.classList.add("blink");
     };
-    robotNameContainer.textContent = name.value;
+    robotNameContainer.textContent = robotModels.name;
     const carouselContainer = body.querySelector(".ct") as HTMLDivElement;
     carouselContainer.classList.add("carousel-container");
     const slideButtons = body.querySelector(".slide-buttons") as HTMLDivElement;
@@ -180,26 +200,33 @@ const createRobot = (name: HTMLInputElement, type: HTMLInputElement, color: HTML
     document.documentElement.scrollTop = 0;
     carousel.style.transform = `translateX(0px)`;
 
+    deleteRobotsBtn.disabled = false;
+    deleteRobotsBtn.textContent = "Delete Robots";
+
     // CAROUSEL LOGIC STARTS FROM HERE 
     // NEEDED FOR CAROUSEL TO WORK!!!
     slideMove = 0;
-    if (robotModels.length === 1) {
-    nextBtn.disabled = true;
-    prevBtn.disabled = true;
-    } else {
-        nextBtn.disabled = false;
-        prevBtn.disabled = true;
-    };
+    carouselButtonsSlide();
 };
-
 //selectors
 const carousel = document.querySelector(".carousel") as HTMLDivElement;
 const nextBtn = document.querySelector("#next") as HTMLButtonElement;
 const prevBtn = document.querySelector("#prev") as HTMLButtonElement;
 let slideMove = 0;
 
+const carouselButtonsSlide = () => {
+    if (robotModels.length === 1) {
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+    } else {
+        nextBtn.disabled = false;
+        prevBtn.disabled = true;
+    };
+    return
+};
+
 // event listeners
-nextBtn.onclick = function () {
+nextBtn.onclick =  () => {
     const sectionsCount = carousel.children.length;
     slideMove++
     if (slideMove - 1 >= 0) {
@@ -216,7 +243,7 @@ nextBtn.onclick = function () {
     carousel.style.transform = `translateX(-${widthToMove}px)`;
 };
 
-prevBtn.onclick = function () {
+prevBtn.onclick = () => {
     slideMove--;
     if (slideMove <= 0) {
         nextBtn.disabled = false;
@@ -225,4 +252,23 @@ prevBtn.onclick = function () {
     const curWidth = carousel.offsetWidth;
     const widthToMove = curWidth * slideMove;
     carousel.style.transform = `translateX(-${widthToMove}px)`;
+};
+
+deleteRobotsBtn.onclick = () => {
+    robotModels.length = 0;
+    localStorage.clear();
+    removeCarouselChild(carousel);
+    const ct = document.querySelector(".ct") as HTMLDivElement;
+    ct.style.border = "none";
+    slideMove = 0;
+    const slideButtons = document.querySelector(".slide-buttons") as HTMLDivElement;
+    slideButtons.style.display = "none";
+    deleteRobotsBtn.disabled = true;
+    deleteRobotsBtn.textContent = "No Robots To Delete";
+};
+
+function removeCarouselChild(carousel: HTMLDivElement) {
+    while (carousel.firstChild) {
+        carousel.removeChild(carousel.firstChild);
+    };
 };

@@ -142,11 +142,11 @@ img:nth-of-type(1) {
 
 .create {
     padding: 0 3%;
-    margin-right: 3%;
 }
 
 .showCreatedRobots {
     padding: 0 1%;
+    margin: 0 3%;
 }
 
 #after-form {
