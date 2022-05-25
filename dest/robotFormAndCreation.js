@@ -236,6 +236,7 @@ deleteRobotsBtn.onclick = () => {
     robotModels.length = 0;
     localStorage.clear();
     removeCarouselChild(carousel);
+    removeTable(afterForm);
     const ct = document.querySelector(".ct");
     ct.style.border = "none";
     slideMove = 0;
@@ -247,6 +248,13 @@ deleteRobotsBtn.onclick = () => {
 function removeCarouselChild(carousel) {
     while (carousel.firstChild) {
         carousel.removeChild(carousel.firstChild);
+    }
+    ;
+}
+;
+function removeTable(tableContainer) {
+    while (tableContainer.firstChild) {
+        tableContainer.removeChild(tableContainer.firstChild);
     }
     ;
 }

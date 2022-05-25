@@ -99,7 +99,7 @@ function formSubmit(event: Event) {
         return;
     };
     const robotType = (type.value === "male") ? RobotType.male : RobotType.female;
-    const createdRobot = {
+    const createdRobot: Robot = {
         id: `${robotModels.length + 1}`,
         name: name.value,
         type: robotType,
@@ -135,7 +135,7 @@ const clearErrorMessages = () => {
 };
 
 //Visual creation of Robots
-const createRobot = (robotModels: any) => {
+const createRobot = (robotModels: Robot) => {
     const body = document.querySelector("body") as HTMLBodyElement;
     const slide1 = buildSection();
     const robotFriend = slide1.querySelector(".robotFriend") as HTMLDivElement;
@@ -258,6 +258,7 @@ deleteRobotsBtn.onclick = () => {
     robotModels.length = 0;
     localStorage.clear();
     removeCarouselChild(carousel);
+    removeTable(afterForm);
     const ct = document.querySelector(".ct") as HTMLDivElement;
     ct.style.border = "none";
     slideMove = 0;
@@ -270,5 +271,11 @@ deleteRobotsBtn.onclick = () => {
 function removeCarouselChild(carousel: HTMLDivElement) {
     while (carousel.firstChild) {
         carousel.removeChild(carousel.firstChild);
+    };
+};
+
+function removeTable(tableContainer: HTMLDivElement) {
+    while (tableContainer.firstChild) {
+        tableContainer.removeChild(tableContainer.firstChild);
     };
 };
