@@ -10,9 +10,8 @@ showRobotsBtn.onclick = function () {
         if (!afterForm.querySelector(".noRobotsYet")) {
             const noRobotsYet = document.createElement("h3");
             noRobotsYet.className = "noRobotsYet";
-            noRobotsYet.style.display = "flex";
-            noRobotsYet.style.justifyContent = "center";
             noRobotsYet.textContent = "No robots created yet";
+            afterForm.style.justifyContent = "center";
             afterForm.appendChild(noRobotsYet);
         }
         return;
