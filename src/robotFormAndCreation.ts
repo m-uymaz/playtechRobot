@@ -266,6 +266,7 @@ deleteRobotsBtn.onclick = () => {
     slideButtons.style.display = "none";
     deleteRobotsBtn.disabled = true;
     deleteRobotsBtn.textContent = "No Robots To Delete";
+    showRobotsBtn.value = "false";
 };
 
 function removeCarouselChild(carousel: HTMLDivElement) {
