@@ -1,7 +1,7 @@
 "use strict";
 const afterForm = document.querySelector("#after-form");
 const showRobotsBtn = document.querySelector(".showCreatedRobots");
-showRobotsBtn.onclick = function () {
+showRobotsBtn.onclick = () => {
     if (robotModels.length > 0 && afterForm.querySelector(".noRobotsYet")) {
         const noRobotsYet = afterForm.querySelector(".noRobotsYet");
         afterForm.removeChild(noRobotsYet);
@@ -134,41 +134,40 @@ const removeNoRobotsYet = () => {
     }
     ;
 };
-const robotMessages = (event) => {
+const robotMessageFromForm = (event) => {
     event.preventDefault();
     const target = event.target;
-    const allRobotsMessageBoards = document.querySelectorAll(".messageBoard");
     const messageFromInput = target.querySelector("input");
     const date = new Date();
+    let messageValue;
     const robotSendingMessage = robotModels.filter(x => x.id === target.id);
-    function addZero(i) {
-        if (parseInt(i) < 10) {
-            i = "0" + i;
-        }
-        return i;
+    if (!messageFromInput.value || messageFromInput.value.trim() === "") {
+        messageValue = "...";
+    }
+    else {
+        messageValue = messageFromInput.value;
     }
     ;
-    const h = addZero(date.getHours().toString());
-    const m = addZero(date.getMinutes().toString());
-    const ampm = parseInt(h) >= 12 ? 'PM' : 'AM';
-    const time = `${h}:${m} ${ampm}`;
+    const message = new ChatManager(robotSendingMessage[0].name, robotSendingMessage[0].color, messageValue, date);
+    robotChats.push(message);
+    message.saveToLocalstorage(robotChats);
+    messageToBoard(message);
+    playAudio();
+    target.reset();
+};
+const messageToBoard = (message) => {
+    const allRobotsMessageBoards = document.querySelectorAll(".messageBoard");
     allRobotsMessageBoards.forEach(messageBoard => {
         const messageConatainer = document.createElement("div");
         const messageparagraph = document.createElement("p");
         messageparagraph.style.marginTop = "0";
-        if (!messageFromInput.value || messageFromInput.value.trim() === "") {
-            messageparagraph.textContent = "...";
-        }
-        else {
-            messageparagraph.textContent = messageFromInput.value;
-        }
-        ;
         messageparagraph.style.display = "block";
+        messageparagraph.textContent = message.message;
         const nameSpan = document.createElement("span");
-        nameSpan.textContent = robotSendingMessage[0].name;
-        nameSpan.style.color = robotSendingMessage[0].color;
+        nameSpan.textContent = message.name;
+        nameSpan.style.color = message.color;
         const timeSpan = document.createElement("span");
-        timeSpan.textContent = time;
+        timeSpan.textContent = new Date(message.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         timeSpan.style.fontWeight = "bold";
         const label = document.createElement("label");
         label.appendChild(nameSpan);
@@ -181,8 +180,17 @@ const robotMessages = (event) => {
     allRobotsMessageBoards.forEach(messageBoard => {
         messageBoard.scrollTop = messageBoard.scrollHeight;
     });
-    target.reset();
-    playAudio();
+};
+const sortMessages = () => {
+    const messageBoard = document.querySelector(".messageBoard");
+    removeDivChild(messageBoard);
+    robotChats.reverse();
+    for (let i = 0; i < robotChats.length; i++) {
+        messageToBoard(robotChats[i]);
+    }
+    ;
+    localStorage.removeItem("robotChats");
+    localStorage.setItem("robotChats", JSON.stringify(robotChats));
 };
 function playAudio() {
     const audio = document.querySelector("#audio");

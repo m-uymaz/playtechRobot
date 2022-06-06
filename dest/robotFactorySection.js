@@ -22,7 +22,7 @@ const buildSection = () => {
     messagesForm.style.alignItems = "center";
     messagesForm.style.width = "100%";
     messagesForm.style.height = "45%";
-    messagesForm.onsubmit = robotMessages;
+    messagesForm.onsubmit = robotMessageFromForm;
     const inputDiv = document.createElement("div");
     inputDiv.style.display = "flex";
     inputDiv.style.width = "100%";
@@ -45,9 +45,18 @@ const buildSection = () => {
     messagesForm.appendChild(messageBtn);
     const messageBoard = document.createElement("div");
     messageBoard.style.width = "100%";
-    messageBoard.style.maxHeight = "50%";
+    messageBoard.style.height = "42%";
     messageBoard.style.overflowX = "hidden";
     messageBoard.className = "messageBoard";
+    const messageBtnDiv = document.createElement("div");
+    messageBtnDiv.style.display = "flex";
+    messageBtnDiv.style.justifyContent = "center";
+    messageBtnDiv.style.marginTop = "1%";
+    const sortMessagesBtn = document.createElement("button");
+    sortMessagesBtn.textContent = "Sort Messages";
+    sortMessagesBtn.className = "sortMessagesBtn";
+    sortMessagesBtn.onclick = sortMessages;
+    messageBtnDiv.appendChild(sortMessagesBtn);
     const lastMessagesDiv = document.createElement("div");
     const hrLastMessages = document.createElement("hr");
     hrLastMessages.className = "hrLastMessages";
@@ -55,6 +64,7 @@ const buildSection = () => {
     contentWraperMessages.appendChild(messagesForm);
     contentWraperMessages.appendChild(lastMessagesDiv);
     contentWraperMessages.appendChild(messageBoard);
+    contentWraperMessages.appendChild(messageBtnDiv);
     const robotContainer = document.createElement("div");
     robotContainer.setAttribute("id", "robotContainer");
     const robotAndNameSection = document.createElement("div");

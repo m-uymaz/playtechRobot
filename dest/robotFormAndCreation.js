@@ -1,5 +1,60 @@
 "use strict";
+class Robot {
+    constructor(id, name, type, color, phrase, options) {
+        this._id = id;
+        this._name = name;
+        this._type = type;
+        this._color = color;
+        this._phrase = phrase;
+        this._options = options;
+    }
+    get id() {
+        return this._id;
+    }
+    get name() {
+        return this._name;
+    }
+    get type() {
+        return this._type;
+    }
+    get color() {
+        return this._color;
+    }
+    get phrase() {
+        return this._phrase;
+    }
+    get options() {
+        return this._options;
+    }
+    saveToLocalstorage(robotModels) {
+        return localStorage.setItem("robots", JSON.stringify(robotModels));
+    }
+    ;
+}
 ;
+class ChatManager {
+    constructor(name, color, message, date) {
+        this._name = name;
+        this._color = color;
+        this._message = message;
+        this._date = date;
+    }
+    get name() {
+        return this._name;
+    }
+    get color() {
+        return this._color;
+    }
+    get message() {
+        return this._message;
+    }
+    get date() {
+        return this._date;
+    }
+    saveToLocalstorage(robotChats) {
+        return localStorage.setItem("robotChats", JSON.stringify(robotChats));
+    }
+}
 var RobotType;
 (function (RobotType) {
     RobotType["male"] = "male";
@@ -7,6 +62,7 @@ var RobotType;
 })(RobotType || (RobotType = {}));
 ;
 const robotModels = [];
+const robotChats = [];
 const deleteRobotsBtn = document.querySelector(".deleteRobots");
 window.onload = () => {
     if (localStorage.getItem("robots")) {
@@ -14,15 +70,32 @@ window.onload = () => {
         deleteRobotsBtn.textContent = "Delete Robots";
         const robotsFromStorage = localStorage.getItem("robots");
         const parsed = JSON.parse(robotsFromStorage);
-        robotModels.push(...parsed);
-        for (let i = 0; i < robotModels.length; i++) {
-            createRobot(robotModels[i]);
+        for (let i = 0; i < parsed.length; i++) {
+            const localStorageRobot = new Robot(parsed[i]._id, parsed[i]._name, parsed[i]._type, parsed[i]._color, parsed[i]._phrase, parsed[i]._options);
+            robotModels.push(localStorageRobot);
+            createRobot(localStorageRobot);
+        }
+        carouselButtonsSlide();
+        if (localStorage.getItem("robotChats")) {
+            const chatsFromStorage = localStorage.getItem("robotChats");
+            localStorage.removeItem("robotChats");
+            const parsed = JSON.parse(chatsFromStorage);
+            for (let i = 0; i < parsed.length; i++) {
+                const messageFromStorage = new ChatManager(parsed[i]._name, parsed[i]._color, parsed[i]._message, parsed[i]._date);
+                const dateNow = new Date();
+                const chatDate = new Date(messageFromStorage.date);
+                if (chatDate.getTime() + 1000 * 60 * 300 > dateNow.getTime()) {
+                    messageToBoard(messageFromStorage);
+                    robotChats.push(messageFromStorage);
+                    messageFromStorage.saveToLocalstorage(robotChats);
+                }
+                ;
+            }
+            ;
         }
         ;
-        carouselButtonsSlide();
     }
     ;
-    console.log(robotModels);
 };
 const form = document.querySelector("#robot-form");
 const phrase = form.querySelector("input[name='phrase']");
@@ -91,20 +164,12 @@ function formSubmit(event) {
     }
     ;
     const robotType = (type.value === "male") ? RobotType.male : RobotType.female;
-    const createdRobot = {
-        id: `${robotModels.length + 1}`,
-        name: name.value,
-        type: robotType,
-        color: color.value,
-        phrase: phrase.value,
-        options
-    };
+    const createdRobot = new Robot(`${robotModels.length + 1}`, name.value, robotType, color.value, phrase.value, options);
     robotModels.push(createdRobot);
-    localStorage.setItem("robots", JSON.stringify(robotModels));
+    createdRobot.saveToLocalstorage(robotModels);
     createRobot(createdRobot);
     phrase.value = "";
     clearErrorMessages();
-    console.log(robotModels);
     form.reset();
     phrase.disabled = !talkCheckbox.checked;
     removeNoRobotsYet();
@@ -120,7 +185,7 @@ const clearErrorMessages = () => {
     const allErrorSpans = document.querySelectorAll(".error");
     allErrorSpans.forEach(el => el.textContent = "");
 };
-const createRobot = (robotModels) => {
+const createRobot = (createdRobot) => {
     const body = document.querySelector("body");
     const slide1 = buildSection();
     const robotFriend = slide1.querySelector(".robotFriend");
@@ -133,12 +198,12 @@ const createRobot = (robotModels) => {
     const rightLeg = slide1.querySelector(".rightLeg");
     const robotNameContainer = slide1.querySelector(".robotNameContainer");
     const ribon = slide1.querySelector("#basicRobot > h3");
-    if (robotModels.type === RobotType.male) {
+    if (createdRobot.type === RobotType.male) {
         torso.classList.add("torso-male");
         leftHand.classList.add("leftHand-male");
         rightHand.classList.add("rightHand-male");
         const torsoMale = slide1.querySelector(".torso-male");
-        torsoMale.style.borderTop = `100px solid ${robotModels.color}`;
+        torsoMale.style.borderTop = `100px solid ${createdRobot.color}`;
         ribon.textContent = "Male Robot";
     }
     else {
@@ -146,33 +211,33 @@ const createRobot = (robotModels) => {
         leftHand.classList.add("leftHand-female");
         rightHand.classList.add("rightHand-female");
         const torsoFemale = slide1.querySelector(".torso-female");
-        torsoFemale.style.borderBottom = `100px solid ${robotModels.color}`;
+        torsoFemale.style.borderBottom = `100px solid ${createdRobot.color}`;
         ribon.textContent = "Female Robot";
     }
     ;
-    if (robotModels.options.includes("can jump")) {
+    if (createdRobot.options.includes("can jump")) {
         robotFriend.classList.add("wholeRobotJump");
         leftLeg.classList.add("legsJump");
         rightLeg.classList.add("legsJump");
     }
     ;
-    if (robotModels.phrase) {
+    if (createdRobot.phrase) {
         const robotContainer = slide1.querySelector("#robotContainer");
         const talkingBubble = document.createElement("div");
         talkingBubble.classList.add("bubble", "bubble-bottom-left");
         const spanBubble = document.createElement("span");
         spanBubble.classList.add("spanBubble");
-        spanBubble.textContent = robotModels.phrase;
+        spanBubble.textContent = createdRobot.phrase;
         talkingBubble.appendChild(spanBubble);
         robotContainer.appendChild(talkingBubble);
         mouth.classList.add("talk");
     }
     ;
-    if (robotModels.options.includes("can blink")) {
+    if (createdRobot.options.includes("can blink")) {
         eye.classList.add("blink");
     }
     ;
-    robotNameContainer.textContent = robotModels.name;
+    robotNameContainer.textContent = createdRobot.name;
     const carouselContainer = body.querySelector(".ct");
     carouselContainer.classList.add("carousel-container");
     const slideButtons = body.querySelector(".slide-buttons");
@@ -234,9 +299,11 @@ prevBtn.onclick = () => {
 };
 deleteRobotsBtn.onclick = () => {
     robotModels.length = 0;
-    localStorage.clear();
-    removeCarouselChild(carousel);
-    removeTable(afterForm);
+    robotChats.length = 0;
+    localStorage.removeItem("robots");
+    localStorage.removeItem("robotChats");
+    removeDivChild(carousel);
+    removeDivChild(afterForm);
     const ct = document.querySelector(".ct");
     ct.style.border = "none";
     slideMove = 0;
@@ -246,16 +313,9 @@ deleteRobotsBtn.onclick = () => {
     deleteRobotsBtn.textContent = "No Robots To Delete";
     showRobotsBtn.value = "false";
 };
-function removeCarouselChild(carousel) {
-    while (carousel.firstChild) {
-        carousel.removeChild(carousel.firstChild);
-    }
-    ;
-}
-;
-function removeTable(tableContainer) {
-    while (tableContainer.firstChild) {
-        tableContainer.removeChild(tableContainer.firstChild);
+function removeDivChild(div) {
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
     }
     ;
 }

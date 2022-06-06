@@ -1,21 +1,22 @@
-const buildSection = () => {
-    const section = document.createElement("section");
+const buildSection = (): HTMLElement => {
+    const section: HTMLElement = document.createElement("section");
     section.classList.add("factory-section");
-    const basicRobot = document.createElement("div");
+    const basicRobot: HTMLDivElement = document.createElement("div");
     basicRobot.setAttribute("id", "basicRobot");
-    const h3 = document.createElement("h3");
+    const h3: HTMLHeadElement = document.createElement("h3");
     h3.textContent = "Basic Robot";
     basicRobot.appendChild(h3);
 
-    const contentWrapper = document.createElement("div");
+    // Messageboard and form
+    const contentWrapper: HTMLDivElement = document.createElement("div");
     contentWrapper.classList.add("content-wrapper");
 
-    const contentWraperMessages = document.createElement("div");
+    const contentWraperMessages: HTMLDivElement = document.createElement("div");
     contentWraperMessages.style.width = "55%";
     contentWrapper.style.maxHeight = "438.5px";
     contentWraperMessages.style.marginRight = "2%";
 
-    const messagesForm = document.createElement("form");
+    const messagesForm: HTMLFormElement = document.createElement("form");
     messagesForm.id = `${ robotModels.length}`;
     messagesForm.className = "messagesForm";
     messagesForm.style.display = "flex";
@@ -24,17 +25,17 @@ const buildSection = () => {
     messagesForm.style.alignItems = "center";
     messagesForm.style.width = "100%";
     messagesForm.style.height = "45%";
-    messagesForm.onsubmit = robotMessages;
+    messagesForm.onsubmit = robotMessageFromForm;
 
-    const inputDiv = document.createElement("div");
+    const inputDiv: HTMLDivElement = document.createElement("div");
     inputDiv.style.display = "flex";
     inputDiv.style.width = "100%";
     inputDiv.style.marginTop = "5%";
 
-    const input = document.createElement("input");
+    const input: HTMLInputElement = document.createElement("input");
     input.style.width = "100%";
 
-    const messageBtn = document.createElement("button");
+    const messageBtn: HTMLButtonElement = document.createElement("button");
     messageBtn.className = "messageButton";
     messageBtn.textContent = "Send";
     messageBtn.style.alignSelf = "end";
@@ -42,7 +43,7 @@ const buildSection = () => {
     messageBtn.style.padding = "0 4%";
     messageBtn.type = "submit";
 
-    const inputDivLabel = document.createElement("label");
+    const inputDivLabel: HTMLLabelElement = document.createElement("label");
     inputDivLabel.style.whiteSpace = "pre";
     inputDivLabel.textContent = "Send message: ";
     inputDiv.appendChild(inputDivLabel);
@@ -50,38 +51,49 @@ const buildSection = () => {
     messagesForm.appendChild(inputDiv);
     messagesForm.appendChild(messageBtn);
 
-    const messageBoard = document.createElement("div");
+    const messageBoard: HTMLDivElement = document.createElement("div");
     messageBoard.style.width = "100%";
-    messageBoard.style.maxHeight = "50%";
+    messageBoard.style.height = "42%";
     messageBoard.style.overflowX = "hidden";
     messageBoard.className = "messageBoard";
 
-    const lastMessagesDiv = document.createElement("div");
-    const hrLastMessages = document.createElement("hr");
+    const messageBtnDiv: HTMLDivElement = document.createElement("div");
+    messageBtnDiv.style.display = "flex";
+    messageBtnDiv.style.justifyContent = "center";
+    messageBtnDiv.style.marginTop = "1%";
+    const sortMessagesBtn: HTMLButtonElement = document.createElement("button");
+    sortMessagesBtn.textContent = "Sort Messages";
+    sortMessagesBtn.className = "sortMessagesBtn";
+    sortMessagesBtn.onclick = sortMessages;
+    messageBtnDiv.appendChild(sortMessagesBtn);
+
+    const lastMessagesDiv: HTMLDivElement = document.createElement("div");
+    const hrLastMessages: HTMLHRElement = document.createElement("hr");
     hrLastMessages.className = "hrLastMessages";
     lastMessagesDiv.appendChild(hrLastMessages);
 
     contentWraperMessages.appendChild(messagesForm);
     contentWraperMessages.appendChild(lastMessagesDiv);
     contentWraperMessages.appendChild(messageBoard);
+    contentWraperMessages.appendChild(messageBtnDiv);
 
-    const robotContainer = document.createElement("div");
+    const robotContainer: HTMLDivElement = document.createElement("div");
     robotContainer.setAttribute("id", "robotContainer");
-    const robotAndNameSection = document.createElement("div");
+    const robotAndNameSection: HTMLDivElement = document.createElement("div");
     robotAndNameSection.className = "robotAndNameSection";
-    const robotFriend = document.createElement("div");
+    const robotFriend: HTMLDivElement = document.createElement("div");
     robotFriend.classList.add("robotFriend");
 
     // ROBOT HEAD
-    const head = document.createElement("div");
+    const head: HTMLDivElement = document.createElement("div");
     head.setAttribute("id", "head");
-    const eyes = document.createElement("div");
+    const eyes: HTMLDivElement = document.createElement("div");
     eyes.setAttribute("id", "eyes");
-    const eyeLeft = document.createElement("div");
+    const eyeLeft: HTMLDivElement = document.createElement("div");
     eyeLeft.classList.add("eye");
-    const eyeRight = document.createElement("div");
+    const eyeRight: HTMLDivElement = document.createElement("div");
     eyeRight.classList.add("eye");
-    const mouth = document.createElement("div");
+    const mouth: HTMLDivElement = document.createElement("div");
     mouth.classList.add("mouth");
 
     eyes.appendChild(eyeLeft);
@@ -90,17 +102,17 @@ const buildSection = () => {
     head.appendChild(mouth);
 
     // ROBOT BODY AND NAME
-    const body = document.createElement("div");
+    const body: HTMLDivElement = document.createElement("div");
     body.setAttribute("id", "body");
-    const leftHand = document.createElement("div");
+    const leftHand: HTMLDivElement = document.createElement("div");
     leftHand.classList.add("hand", "leftHand");
-    const torso = document.createElement("div");
+    const torso: HTMLDivElement = document.createElement("div");
     torso.classList.add("torso");
-    const rightHand = document.createElement("div");
+    const rightHand: HTMLDivElement = document.createElement("div");
     rightHand.classList.add("hand", "rightHand");
-    const leftLeg = document.createElement("div");
+    const leftLeg: HTMLDivElement = document.createElement("div");
     leftLeg.classList.add("leg", "leftLeg");
-    const rightLeg = document.createElement("div");
+    const rightLeg: HTMLDivElement = document.createElement("div");
     rightLeg.classList.add("leg", "rightLeg");
 
     body.appendChild(leftHand);
@@ -109,7 +121,7 @@ const buildSection = () => {
     body.appendChild(leftLeg);
     body.appendChild(rightLeg);
 
-    const robotNameContainer = document.createElement("div");
+    const robotNameContainer: HTMLDivElement = document.createElement("div");
     robotNameContainer.classList.add("robotNameContainer");
 
     robotFriend.appendChild(head);
@@ -193,7 +205,7 @@ const buildSection = () => {
 
     section.appendChild(contentWrapper);
 
-    const ct = document.querySelector(".ct") as HTMLElement;
+    const ct: HTMLDivElement = document.querySelector(".ct") as HTMLDivElement;
     ct.style.border = "3px solid #006cbe";
 
     return section;
