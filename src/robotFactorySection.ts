@@ -205,7 +205,7 @@ const buildSection = (): HTMLElement => {
 
     section.appendChild(contentWrapper);
 
-    const ct: HTMLDivElement = document.querySelector(".ct") as HTMLDivElement;
+    const ct: HTMLDivElement = document.querySelector<HTMLDivElement>(".ct");
     ct.style.border = "3px solid #006cbe";
 
     return section;

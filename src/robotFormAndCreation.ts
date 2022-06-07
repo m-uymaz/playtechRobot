@@ -87,7 +87,7 @@ enum RobotType {
 const robotModels: Robot[] = [];
 const robotChats: ChatManager[] = [];
 
-const deleteRobotsBtn = document.querySelector<HTMLButtonElement>(".deleteRobots") as HTMLButtonElement;
+const deleteRobotsBtn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".deleteRobots");
 window.onload = (): void => {
     if (localStorage.getItem("robots")) {
         deleteRobotsBtn.disabled = false;
@@ -130,14 +130,14 @@ window.onload = (): void => {
     };
 };
 
-const form = document.querySelector<HTMLFormElement>("#robot-form") as HTMLFormElement;
-const phrase = form.querySelector<HTMLButtonElement>("input[name='phrase']") as HTMLButtonElement;
+const form: HTMLFormElement = document.querySelector<HTMLFormElement>("#robot-form");
+const phrase: HTMLButtonElement = form.querySelector<HTMLButtonElement>("input[name='phrase']");
 form.addEventListener("submit", formSubmit);
 
 //Checkbox for "Phrase" input
 const onCheckboxChange = (): void => {
-    const talkCheckbox = form.querySelector<HTMLInputElement>("input[name='canTalk']") as HTMLInputElement;
-    const phrase = form.querySelector<HTMLInputElement>("input[name='phrase']") as HTMLInputElement;
+    const talkCheckbox: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='canTalk']");
+    const phrase: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='phrase']");
     phrase.disabled = !talkCheckbox.checked;
     if (!talkCheckbox.checked) {
         phrase.value = "";
@@ -148,9 +148,9 @@ const onCheckboxChange = (): void => {
 function formSubmit(event: Event): void {
     event.preventDefault();
     // Checking if robots can jump, talk, blink
-    const jumpCheckbox = form.querySelector<HTMLInputElement>("input[name='canJump']") as HTMLInputElement;
-    const talkCheckbox = form.querySelector<HTMLInputElement>("input[name='canTalk']") as HTMLInputElement;
-    const blinkCheckbox = form.querySelector<HTMLInputElement>("input[name='canBlink']") as HTMLInputElement;
+    const jumpCheckbox: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='canJump']");
+    const talkCheckbox: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='canTalk']");
+    const blinkCheckbox: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='canBlink']");
     const options: string[] = [];
     let jump: string;
     let talk: string;
@@ -169,29 +169,29 @@ function formSubmit(event: Event): void {
         options.push(blink);
     };
 
-    const name = form.querySelector<HTMLInputElement>("#robotName") as HTMLInputElement;
-    const type = form.querySelector<HTMLInputElement>("#selectType") as HTMLInputElement;
-    const color = form.querySelector<HTMLInputElement>("#selectColor") as HTMLInputElement;
-    const phrase = form.querySelector<HTMLInputElement>("input[name='phrase']") as HTMLInputElement;
+    const name: HTMLInputElement = form.querySelector<HTMLInputElement>("#robotName");
+    const type: HTMLInputElement = form.querySelector<HTMLInputElement>("#selectType");
+    const color: HTMLInputElement = form.querySelector<HTMLInputElement>("#selectColor");
+    const phrase: HTMLInputElement = form.querySelector<HTMLInputElement>("input[name='phrase']");
     clearErrorMessages();
     if (!name.value || !type.value || !color.value || !phrase.disabled && phrase.value === "") {
         if (!name.value) {
-            const spanErrorName = document.querySelector<HTMLSpanElement>(".errorName") as HTMLSpanElement;
+            const spanErrorName: HTMLSpanElement = document.querySelector<HTMLSpanElement>(".errorName");
             const nameErrorMessage: string = "Please enter a name";
             showError(name, nameErrorMessage, spanErrorName);
         }
         if (!type.value) {
-            const spanErrorType = document.querySelector<HTMLSpanElement>(".errorType") as HTMLSpanElement;
+            const spanErrorType: HTMLSpanElement = document.querySelector<HTMLSpanElement>(".errorType");
             const typeErrorMessage: string = "Select a type";
             showError(type, typeErrorMessage, spanErrorType);
         }
         if (!color.value) {
-            const spanErrorColor = document.querySelector<HTMLSpanElement>(".errorColor") as HTMLSpanElement;
+            const spanErrorColor: HTMLSpanElement = document.querySelector<HTMLSpanElement>(".errorColor");
             const colorErrorMessage: string = "Chose a color";
             showError(color, colorErrorMessage, spanErrorColor);
         }
         if (!phrase.disabled && phrase.value === "") {
-            const spanErrorPhrase = document.querySelector<HTMLSpanElement>(".errorPhrase") as HTMLSpanElement;
+            const spanErrorPhrase: HTMLSpanElement = document.querySelector<HTMLSpanElement>(".errorPhrase");
             const phraseErrorMessage: string = "Please write a phrase";
             showError(phrase, phraseErrorMessage, spanErrorPhrase);
         };
@@ -228,40 +228,40 @@ const showError = (input: HTMLInputElement, errorMessage: string, spanError: HTM
 
 //Clears messages on a submit or a submit try after an error
 const clearErrorMessages = (): void => {
-    const allErrorSpans: NodeListOf<Element> = document.querySelectorAll(".error");
+    const allErrorSpans: NodeListOf<Element> = document.querySelectorAll<Element>(".error");
     allErrorSpans.forEach(el => el.textContent = "");
 };
 
 //Visual creation of Robots
 const createRobot = (createdRobot: Robot): void => {
-    const body = document.querySelector<HTMLBodyElement>("body") as HTMLBodyElement;
+    const body: HTMLBodyElement = document.querySelector<HTMLBodyElement>("body");
     const slide1 = buildSection();
-    const robotFriend = slide1.querySelector<HTMLDivElement>(".robotFriend") as HTMLDivElement;
+    const robotFriend: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".robotFriend");
 
     //Robot body
-    const eye = slide1.querySelector<HTMLDivElement>("#eyes div:nth-of-type(2)") as HTMLDivElement;
-    const torso = slide1.querySelector<HTMLDivElement>(".torso") as HTMLDivElement;
-    const mouth = slide1.querySelector<HTMLDivElement>(".mouth") as HTMLDivElement;
-    const leftHand = slide1.querySelector<HTMLDivElement>(".leftHand") as HTMLDivElement;
-    const rightHand = slide1.querySelector<HTMLDivElement>(".rightHand") as HTMLDivElement;
-    const leftLeg = slide1.querySelector<HTMLDivElement>(".leftLeg") as HTMLDivElement;
-    const rightLeg = slide1.querySelector<HTMLDivElement>(".rightLeg") as HTMLDivElement;
+    const eye: HTMLDivElement = slide1.querySelector<HTMLDivElement>("#eyes div:nth-of-type(2)");
+    const torso: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".torso");
+    const mouth: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".mouth");
+    const leftHand: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".leftHand");
+    const rightHand: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".rightHand");
+    const leftLeg: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".leftLeg");
+    const rightLeg: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".rightLeg");
 
-    const robotNameContainer = slide1.querySelector<HTMLDivElement>(".robotNameContainer") as HTMLDivElement;
-    const ribon = slide1.querySelector<HTMLHeadElement>("#basicRobot > h3") as HTMLHeadElement;
+    const robotNameContainer: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".robotNameContainer");
+    const ribon: HTMLHeadElement = slide1.querySelector<HTMLHeadElement>("#basicRobot > h3");
 
     if (createdRobot.type === RobotType.male) {
         torso.classList.add("torso-male");
         leftHand.classList.add("leftHand-male");
         rightHand.classList.add("rightHand-male");
-        const torsoMale = slide1.querySelector<HTMLDivElement>(".torso-male") as HTMLDivElement;
+        const torsoMale: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".torso-male");
         torsoMale.style.borderTop = `100px solid ${createdRobot.color}`;
         ribon.textContent = "Male Robot";
     } else {
         torso.classList.add("torso-female");
         leftHand.classList.add("leftHand-female");
         rightHand.classList.add("rightHand-female");
-        const torsoFemale = slide1.querySelector<HTMLDivElement>(".torso-female") as HTMLDivElement;
+        const torsoFemale: HTMLDivElement = slide1.querySelector<HTMLDivElement>(".torso-female");
         torsoFemale.style.borderBottom = `100px solid ${createdRobot.color}`;
         ribon.textContent = "Female Robot";
     };
@@ -273,7 +273,7 @@ const createRobot = (createdRobot: Robot): void => {
         rightLeg.classList.add("legsJump");
     };
     if (createdRobot.phrase) {
-        const robotContainer = slide1.querySelector<HTMLDivElement>("#robotContainer") as HTMLDivElement;
+        const robotContainer: HTMLDivElement = slide1.querySelector<HTMLDivElement>("#robotContainer");
         const talkingBubble: HTMLDivElement = document.createElement("div");
         talkingBubble.classList.add("bubble", "bubble-bottom-left");
         
@@ -288,11 +288,11 @@ const createRobot = (createdRobot: Robot): void => {
         eye.classList.add("blink");
     };
     robotNameContainer.textContent = createdRobot.name;
-    const carouselContainer = body.querySelector<HTMLDivElement>(".ct") as HTMLDivElement;
+    const carouselContainer: HTMLDivElement = body.querySelector<HTMLDivElement>(".ct");
     carouselContainer.classList.add("carousel-container");
-    const slideButtons = body.querySelector<HTMLDivElement>(".slide-buttons") as HTMLDivElement;
+    const slideButtons: HTMLDivElement = body.querySelector<HTMLDivElement>(".slide-buttons");
     slideButtons.style.display = "flex";
-    const carousel = body.querySelector<HTMLDivElement>(".carousel") as HTMLDivElement;
+    const carousel: HTMLDivElement = body.querySelector<HTMLDivElement>(".carousel");
     carousel.prepend(slide1);
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -307,9 +307,9 @@ const createRobot = (createdRobot: Robot): void => {
     carouselButtonsSlide();
 };
 //selectors
-const carousel = document.querySelector<HTMLDivElement>(".carousel") as HTMLDivElement;
-const nextBtn = document.querySelector<HTMLButtonElement>("#next") as HTMLButtonElement;
-const prevBtn = document.querySelector<HTMLButtonElement>("#prev") as HTMLButtonElement;
+const carousel: HTMLDivElement = document.querySelector<HTMLDivElement>(".carousel");
+const nextBtn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#next");
+const prevBtn: HTMLButtonElement = document.querySelector<HTMLButtonElement>("#prev");
 let slideMove: number = 0;
 
 const carouselButtonsSlide = (): void => {
@@ -359,17 +359,17 @@ deleteRobotsBtn.onclick = (): void => {
     localStorage.removeItem("robotChats");
     removeDivChild(carousel);
     removeDivChild(afterForm);
-    const ct = document.querySelector<HTMLDivElement>(".ct") as HTMLDivElement;
+    const ct: HTMLDivElement = document.querySelector<HTMLDivElement>(".ct");
     ct.style.border = "none";
     slideMove = 0;
-    const slideButtons = document.querySelector<HTMLDivElement>(".slide-buttons") as HTMLDivElement;
+    const slideButtons: HTMLDivElement = document.querySelector<HTMLDivElement>(".slide-buttons");
     slideButtons.style.display = "none";
     deleteRobotsBtn.disabled = true;
     deleteRobotsBtn.textContent = "No Robots To Delete";
     showRobotsBtn.value = "false";
 };
 
-function removeDivChild(div: HTMLDivElement): void {
+function removeDivChild(div: Element): void {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     };

@@ -182,8 +182,10 @@ const messageToBoard = (message) => {
     });
 };
 const sortMessages = () => {
-    const messageBoard = document.querySelector(".messageBoard");
-    removeDivChild(messageBoard);
+    const messageBoard = document.querySelectorAll(".messageBoard");
+    messageBoard.forEach((el) => {
+        removeDivChild(el);
+    });
     robotChats.reverse();
     for (let i = 0; i < robotChats.length; i++) {
         messageToBoard(robotChats[i]);

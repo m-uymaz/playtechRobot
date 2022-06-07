@@ -1,13 +1,13 @@
-const afterForm = document.querySelector<HTMLDivElement>("#after-form") as HTMLDivElement;
-const showRobotsBtn = document.querySelector<HTMLButtonElement>(".showCreatedRobots") as HTMLButtonElement;
+const afterForm: HTMLDivElement = document.querySelector<HTMLDivElement>("#after-form");
+const showRobotsBtn: HTMLButtonElement = document.querySelector<HTMLButtonElement>(".showCreatedRobots");
 
 showRobotsBtn.onclick = (): void => {
     if (robotModels.length > 0 && afterForm.querySelector(".noRobotsYet")) {
-        const noRobotsYet = afterForm.querySelector<HTMLHeadElement>(".noRobotsYet") as HTMLHeadElement;
+        const noRobotsYet: HTMLHeadElement = afterForm.querySelector<HTMLHeadElement>(".noRobotsYet");
         afterForm.removeChild(noRobotsYet);
     } else if (robotModels.length === 0) {
         if (!afterForm.querySelector(".noRobotsYet")) {
-            const noRobotsYet: HTMLHeadElement = document.createElement("h3") as HTMLHeadElement;
+            const noRobotsYet: HTMLHeadElement = document.createElement("h3");
             noRobotsYet.className = "noRobotsYet";
             noRobotsYet.textContent = "No robots created yet";
             afterForm.style.justifyContent = "center";
@@ -21,8 +21,8 @@ showRobotsBtn.onclick = (): void => {
     };
 
     addRobotsToTable(robotModels);
-    const name = form.querySelector<HTMLInputElement>("#robotName") as HTMLInputElement;
-    const type = form.querySelector<HTMLInputElement>("#selectType") as HTMLInputElement;
+    const name: HTMLInputElement = form.querySelector<HTMLInputElement>("#robotName");
+    const type: HTMLInputElement = form.querySelector<HTMLInputElement>("#selectType");
 
     if ((name.value || type.value) && afterForm.children.length > 0) {
         let robotsToShow: Robot[] = [];
@@ -38,7 +38,7 @@ showRobotsBtn.onclick = (): void => {
 
 const showRobotFromATag = (event: Event): void => {
     const name: string = (event.target as HTMLInputElement).value;
-    const carousel = document.querySelector<HTMLDivElement>(".carousel") as HTMLDivElement;
+    const carousel: HTMLDivElement = document.querySelector<HTMLDivElement>(".carousel");
     const curWidth: number = carousel.offsetWidth;
     const widthToMove: number = curWidth * slideMove;
     console.log(event.target);
@@ -46,13 +46,13 @@ const showRobotFromATag = (event: Event): void => {
 
 const addRobotsToTable = (robotsToShow: Robot[]): void => {
     // Upon search remove old table
-    const table = document.querySelector<HTMLTableElement>("table") as HTMLTableElement;
+    const table: HTMLTableCaptionElement = document.querySelector<HTMLTableElement>("table");
     if (table.querySelector(".tBody")) {
-    const tBody = table.querySelector<HTMLTableSectionElement>(".tBody") as HTMLTableSectionElement;
+    const tBody: HTMLTableSectionElement = table.querySelector<HTMLTableSectionElement>(".tBody");
     table.removeChild(tBody);
     };
     // If n of robots changes
-    const h4RobotCount = afterForm.querySelector<HTMLDivElement>(".h4RobotCount") as HTMLDivElement;
+    const h4RobotCount: HTMLDivElement = afterForm.querySelector<HTMLDivElement>(".h4RobotCount");
     if (robotsToShow.length < 2) {
         h4RobotCount.textContent = `${robotsToShow.length} robot found`;
 
@@ -141,7 +141,7 @@ const createRobotTable = (): void => {
 
 const removeNoRobotsYet = (): void => {
     if (afterForm.querySelector(".noRobotsYet")) {
-        const noRobotsYet = afterForm.querySelector<HTMLDivElement>(".noRobotsYet") as HTMLDivElement;
+        const noRobotsYet: HTMLDivElement = afterForm.querySelector<HTMLDivElement>(".noRobotsYet");
         afterForm.removeChild(noRobotsYet);
         afterForm.style.justifyContent = "flex-start";
     };
@@ -151,9 +151,9 @@ const removeNoRobotsYet = (): void => {
 const robotMessageFromForm = (event: Event): void => {
     //Message from FORM
     event.preventDefault();
-    const target = event.target as HTMLFormElement;
+    const target: HTMLFormElement = event.target as HTMLFormElement;
 
-    const messageFromInput = target.querySelector<HTMLInputElement>("input") as HTMLInputElement;
+    const messageFromInput: HTMLInputElement = target.querySelector<HTMLInputElement>("input");
     const date: Date = new Date();
     let messageValue: string;
 
@@ -211,8 +211,10 @@ const messageToBoard = (message: ChatManager): void => {
 };
 
 const sortMessages = (): void => {
-    const messageBoard = document.querySelector<HTMLDivElement>(".messageBoard") as HTMLDivElement;
-    removeDivChild(messageBoard);
+    const messageBoard: NodeListOf<Element> = document.querySelectorAll(".messageBoard");
+    messageBoard.forEach((el: Element) => {
+        removeDivChild(el);
+    });
     robotChats.reverse();
     for (let i = 0; i < robotChats.length; i++) {
         messageToBoard(robotChats[i]);
